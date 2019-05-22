@@ -13,8 +13,7 @@ pyg.setTitle("*pyg test*")
 get resource and initialize for application
 """
 img = pyg.imgload("res/pic.png")
-img2 = pyg.imgload("res/pygame_tiny.png")
-pos = [0] * 2 
+pos = [0, 0] 
 r = 0
 
 """
@@ -23,8 +22,33 @@ define for sprite sheet
 """
 sp = {
 	"player":(0, 0, 8, 8), 
-	"tomato":(8, 0, 8, 8)
+	"tomato":(8, 0, 8, 8),
+	"block":(16,0,8,8),
 }
+
+"""
+Level design Sample
+create "bg" and drow it.
+"""
+map = (
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	1,0,0,0,0,0,0,0,0,0,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,1,0,0,0,1,
+	1,0,0,0,0,0,0,1,0,1,
+	1,1,1,1,1,1,1,1,1,1,
+)
+
+bg = pyg.createImg((80,80))
+for y in range(10):
+	for x in range(10):
+		idx = y*10+x
+		if map[idx] == 1:
+			pyg.putImg(img, (x*8, y*8), sp["block"],surf=bg)
 
 
 """
@@ -33,12 +57,11 @@ main loop
 while pyg._running:
 	pyg.process(0.016)
 
-	pyg.putImg(img2,(64,64),flip=pyg.FLIP_H,rotate=r,center=True)
-	r = (r + 5)%360
-	
+	pyg.putImg(bg, (40,40), rotate=r, center=True ) #draw bg
+	r = (r + 1) % 360
+
+
 	pyg.putImg(img, (0,0))
-	pyg.putImg(img, (0,8),  sp["player"])
-	pyg.putImg(img, (4,8),  sp["player"], pyg.FLIP_H)
 
 	pyg.putImg(img, (0,16), sp["tomato"])
 	pyg.putImg(img, (8,16), sp["tomato"], pyg.FLIP_H)

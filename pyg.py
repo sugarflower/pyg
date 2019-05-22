@@ -15,7 +15,7 @@ def setTitle(title):
 
 def init(real=[128,64],disp=-1):
 	global _running, _keys, _keyDownCnt, _size, _event, _mouse
-	global mixer, screen, surface, surfBuf, mode
+	global mixer, screen, surface, bg,  mode
 
 	_running = True
 	_keys = [False] * 128
@@ -36,12 +36,11 @@ def init(real=[128,64],disp=-1):
 	os.environ["SDL_VIDEO_CENTERED"] = "1"
 	screen = pygame.display.set_mode(_size["display"], mode)
 	surface = pygame.Surface(_size["real"], mode | pygame.SRCALPHA, 32)
-	surfBuf = pygame.Surface(_size["display"], mode | pygame.SRCALPHA, 32)
 
 	set_mouseCursorVisible(False)
 
 def process( wait = 0.03 ):
-	global _keyDownCnt, _running, _keys, _event, screen, _mouse
+	global _keyDownCnt, _running, _keys, _mouse, _event, screen, surface, bg
 	st = time.time()
 	_procWait = True
 	while _procWait:
@@ -68,8 +67,7 @@ def process( wait = 0.03 ):
 				_mouse["pos"] = (event.pos[0],event.pos[1])
 
 		if time.time() - st > wait:
-			surfBuf = pygame.transform.scale(surface, _size["display"])
-			screen.blit(surfBuf,(0,0))
+			screen.blit(pygame.transform.scale(surface,_size["display"]),(0,0))
 			pygame.display.update()
 			surface.fill((0,0,0,0))
 			screen.fill((0,0,0))
@@ -102,8 +100,13 @@ def get_mousePos():
 	ha = _size["real"][1] / _size["display"][1]
 	return _mouse["pos"][0] * wa , _mouse["pos"][1] * ha
 
-def putImg(img,pos,rect=-1,flip=-1,rotate=-1,center=False):
+def createImg(size):
+	return pygame.Surface(size, mode | pygame.SRCALPHA, 32)
+
+def putImg(img,pos, rect=-1 ,flip=-1, rotate=-1, center=False, surf=-1):
 	global surface,mode
+	if surf == -1:
+		surf = surface
 	if rect == -1:
 		r = (img.get_width(),img.get_height())
 		surTemp = pygame.Surface(r,mode | pygame.SRCALPHA, 32)
@@ -129,12 +132,12 @@ def putImg(img,pos,rect=-1,flip=-1,rotate=-1,center=False):
 		dw = int((w - st2.get_width()) /2)
 		dh = int((h - st2.get_height())/2)
 		if center:
-			surface.blit(st2,(pos[0]+dw-(w/2),pos[1]+dh-(h/2)))
+			surf.blit(st2,(pos[0]+dw-(w/2),pos[1]+dh-(h/2)))
 		else:
-			surface.blit(st2,(pos[0]+dw,pos[1]+dh))	
+			surf.blit(st2,(pos[0]+dw,pos[1]+dh))	
 		del st2
 	else:	
-		surface.blit(surTemp,pos)
+		surf.blit(surTemp,pos)
 	
 	del surTemp
 
