@@ -1,2 +1,5 @@
 /__pycache__/
 /res/__pycache__/
+/examples/__pycache__/
+/examples/pyg.py
+

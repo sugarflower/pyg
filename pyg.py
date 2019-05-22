@@ -5,9 +5,9 @@ import os, time
 FLIP_H = 1
 FLIP_V = 2
 FLIP_BOTH = 3
-R90  = 89
-R180 = 179
-R270 = 269
+R90  = 90 
+R180 = 180
+R270 = 270
 
 
 def setTitle(title):
@@ -126,7 +126,7 @@ def putImg(img,pos, rect=-1 ,flip=-1, rotate=0, center=False, surf=-1):
 		surTemp=pygame.transform.flip(surTemp,True,True)
 	
 	if rotate != 0:
-		rotate = 359 - (rotate % 360)
+		rotate = rotate % 360
 		st2 = pygame.transform.rotate(surTemp,rotate)
 		w = surTemp.get_width()
 		h = surTemp.get_height()
