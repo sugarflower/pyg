@@ -8,7 +8,6 @@ set real picture size and display size
 pyg.init( (80,80), (320,320) )
 pyg.setTitle("*pyg test*")
 
-
 """
 get resource and initialize for application
 """
@@ -50,7 +49,6 @@ for y in range(10):
 		if map[idx] == 1:
 			pyg.putImg(img, (x*8, y*8), sp["block"],surf=bg)
 
-
 """
 main loop
 """
@@ -60,17 +58,16 @@ while pyg._running:
 	pyg.putImg(bg, (40,40), rotate=r, center=True ) #draw bg
 	r = (r + 1) % 360
 
-
 	pyg.putImg(img, (0,0))
 
 	pyg.putImg(img, (0,16), sp["tomato"])
-	pyg.putImg(img, (8,16), sp["tomato"], pyg.FLIP_H)
-	pyg.putImg(img, (16,16),sp["tomato"], pyg.FLIP_V)
-	pyg.putImg(img, (24,16),sp["tomato"], pyg.FLIP_BOTH)
+	pyg.putImg(img, (8,16), sp["tomato"], flip = pyg.FLIP_H)
+	pyg.putImg(img, (16,16),sp["tomato"], flip = pyg.FLIP_V)
+	pyg.putImg(img, (24,16),sp["tomato"], flip = pyg.FLIP_BOTH)
 
-	pyg.putImg(img, (0,24), sp["player"], rotate=90 )
-	pyg.putImg(img, (8,24), sp["player"], rotate=180)
-	pyg.putImg(img, (16,24),sp["player"], rotate=270)
+	pyg.putImg(img, (0,24), sp["player"], rotate = pyg.R90 )
+	pyg.putImg(img, (8,24), sp["player"], rotate = pyg.R180)
+	pyg.putImg(img, (16,24),sp["player"], rotate = pyg.R270)
 
 	pyg.putImg(img,pyg.get_mousePos(), sp["player"])
 
