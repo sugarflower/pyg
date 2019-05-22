@@ -65,9 +65,9 @@ while pyg._running:
 	pyg.putImg(img, (16,16),sp["tomato"], flip = pyg.FLIP_V)
 	pyg.putImg(img, (24,16),sp["tomato"], flip = pyg.FLIP_BOTH)
 
-	pyg.putImg(img, (0,24), sp["player"], rotate = pyg.R90 )
-	pyg.putImg(img, (8,24), sp["player"], rotate = pyg.R180)
-	pyg.putImg(img, (16,24),sp["player"], rotate = pyg.R270)
+	pyg.putImg(img, (0,24), sp["player"], rotate = 90 )
+	pyg.putImg(img, (8,24), sp["player"], rotate = 180)
+	pyg.putImg(img, (16,24),sp["player"], rotate = 270)
 
 	pyg.putImg(img,pyg.get_mousePos(), sp["player"])
 
