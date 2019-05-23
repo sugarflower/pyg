@@ -121,20 +121,16 @@ def putImg(img,pos, rect=-1 ,flip=-1, rotate=0, center=False, surf=-1):
 	if flip == FLIP_BOTH:
 		surTemp=pygame.transform.flip(surTemp,True,True)
 	
-	if rotate != 0:
-		rotate = (360 - rotate) % 360
-		st2 = pygame.transform.rotate(surTemp,rotate)
-		w = surTemp.get_width()
-		h = surTemp.get_height()
-		dw = int((w - st2.get_width()) /2)
-		dh = int((h - st2.get_height())/2)
-		if center:
-			surf.blit(st2,(pos[0]+dw-(w/2),pos[1]+dh-(h/2)))
-		else:
-			surf.blit(st2,(pos[0]+dw,pos[1]+dh))	
-		del st2
-	else:	
-		surf.blit(surTemp,pos)
-	
+	rotate = (360 - rotate) % 360
+	st2 = pygame.transform.rotate(surTemp,rotate)
+	w = surTemp.get_width()
+	h = surTemp.get_height()
+	dw = int((w - st2.get_width()) /2)
+	dh = int((h - st2.get_height())/2)
+	if center:
+		surf.blit(st2,(pos[0]+dw-(w/2),pos[1]+dh-(h/2)))
+	else:
+		surf.blit(st2,(pos[0]+dw,pos[1]+dh))	
+	del st2
 	del surTemp
 
