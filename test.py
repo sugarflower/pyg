@@ -5,7 +5,7 @@ import pyg
 pyg.init
 set real picture size and display size
 """
-pyg.init( (80,80), (320,320) )
+pyg.begin( (80,80), (320,320) )
 pyg.setTitle("*pyg test*")
 
 """
@@ -83,5 +83,5 @@ while pyg._running:
 """
 end app
 """
-pyg.quit()
+pyg.end()
 

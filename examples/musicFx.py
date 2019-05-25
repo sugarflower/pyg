@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import pyg
 
-pyg.init((5,3),(300,300))
+pyg.begin((5,3),(300,300))
 pyg.setTitle("music and Fx")
 
 
@@ -29,3 +29,4 @@ while pyg._running:
 	elif (pyg.isKeyDown("a") == False) & kd:
 		kd = False
 
+pyg.end()
