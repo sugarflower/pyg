@@ -11,7 +11,7 @@ pyg.setTitle("*pyg test*")
 """
 get resource and initialize for application
 """
-img = pyg.imgload("res/pic.png")
+img = pyg.imgLoad("res/pic.png")
 pos = [0, 0] 
 r = 0
 
