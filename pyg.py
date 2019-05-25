@@ -1,4 +1,3 @@
-#import pygame
 from pygame import *
 from pygame.locals import *
 import os, time
@@ -73,7 +72,7 @@ def process( wait = 0.03 ):
 def end():
 	quit()
 
-def imgload(path):
+def imgLoad(path):
 	return image.load(path).convert_alpha()
 
 def isKeyDown(key):
@@ -129,9 +128,9 @@ def putImg(img,pos, rect=-1 ,flip=-1, rotate=0, center=False, surf=-1):
 	dw = int((w - st2.get_width()) /2)
 	dh = int((h - st2.get_height())/2)
 	if center:
-		surf.blit(st2,(pos[0]+dw-(w/2),pos[1]+dh-(h/2)))
+		surf.blit(st2,(pos[0]+dw-(w/2), pos[1]+dh-(h/2)))
 	else:
-		surf.blit(st2,(pos[0]+dw,pos[1]+dh))	
+		surf.blit(st2,(pos[0]+dw, pos[1]+dh))	
 	del st2
 	del surTemp
 
