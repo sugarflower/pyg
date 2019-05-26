@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import pyg
 
-pyg.begin((5,3),(300,300))
+pyg.begin((80,80),(300,300))
 pyg.setTitle("music and Fx")
 
 
@@ -16,7 +16,12 @@ load fx sound
 """
 fx = pyg.mixer.Sound("res/a.wav")
 
+
 kd = False
+
+f = pyg.TinyFont()
+f.print("HIT'A'KEY: PLAYFX",(6,36))
+
 while pyg._running:
 	pyg.process()
 
@@ -29,4 +34,4 @@ while pyg._running:
 	elif (pyg.isKeyDown("a") == False) & kd:
 		kd = False
 
-pyg.end()
+pyg.quit()

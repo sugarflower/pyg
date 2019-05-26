@@ -49,14 +49,21 @@ for y in range(10):
 		if map[idx] == 1:
 			pyg.putImg(img, (x*8, y*8), sp["block"],surf=bg)
 
+
+"""
+font
+"""
+f = pyg.TinyFont()
+
 """
 main loop
 """
 while pyg._running:
 	pyg.process(0.016)
+	pyg.fill((0,0,0,32))
 
 	pyg.putImg(bg, (40,40), rotate=r, center=True ) #draw bg
-	r = (r + 1) % 360
+	r = (r + 2) % 360
 
 	pyg.putImg(img, (0,0))
 
@@ -71,6 +78,10 @@ while pyg._running:
 
 	pyg.putImg(img,pyg.get_mousePos(), sp["player"])
 
+	f.print("PYG TEST",(4,36))
+	f.print("by SUGARFLOWER",(20,42))
+
+
 	if pyg.isKeyDownCode(27): #ESC key
 		pyg._running = False
 	
@@ -82,15 +93,19 @@ while pyg._running:
 
 	if pyg.isClick():
 		print("click")
-	
 	if pyg.isClick(1):
 		print("click 1")
-	
 	if pyg.isClick(2):
 		print("click 2")
 
+	if pyg.isPress():
+		print("press")
+	if pyg.isPress(1):
+		print("press 1")
+	if pyg.isPress(2):
+		print("press 2")
 """
 end app
 """
-pyg.end()
+pyg.quit()
 

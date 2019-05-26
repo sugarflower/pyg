@@ -1,6 +1,6 @@
 from pygame import *
 from pygame.locals import *
-import os, time
+import os, time, math
 
 FLIP_H = 1
 FLIP_V = 2
@@ -10,7 +10,7 @@ def setTitle(title):
 	display.set_caption(title)
 
 def begin(real=[128,64],disp=-1):
-	global _running, _keys, _keyDownCnt, _size, _event, _mouse
+	global _running, _keys, _keyDownCnt, _size, _event, _mouse, _mouseButton
 	global mixer, screen, surface, bg,  mode
 
 	_running = True
@@ -76,17 +76,14 @@ def process( wait = 0.03 ):
 
 		if time.time() - st > wait:
 			update()
-			surface.fill((0,0,0,0))
-			screen.fill((0,0,0))
+			#surface.fill((0,0,0,0))
+			#screen.fill((0,0,0))
 			_procWait = False
 
 def update():
 	global screen, surface
 	screen.blit(transform.scale(surface,_size["display"]),(0,0))
 	display.update()
-
-def end():
-	quit()
 
 def imgLoad(path):
 	return image.load(path).convert_alpha()
@@ -115,6 +112,10 @@ def get_mousePos():
 def isClick(button=0):
 	global _click
 	return _click[button]
+
+def isPress(button=0):
+	global _mouseButton
+	return _mouseButton[button]
 
 def createImg(size):
 	return Surface(size, mode | SRCALPHA, 32)
@@ -153,4 +154,44 @@ def putImg(img,pos, rect=-1 ,flip=-1, rotate=0, center=False, surf=-1):
 		surf.blit(st2,(pos[0]+dw, pos[1]+dh))	
 	del st2
 	del surTemp
+
+def clear():
+	global screen, surface
+	fill((0,0,0,0),surface)
+	fill((0,0,0),screen)
+
+def fill( color=(0,0,0,0) , surf=-1 ):
+	global surface
+	if surf==-1:
+		surf = surface
+	surf.fill((color))
+
+
+class TinyFont:
+	def __init__(self):
+		self.font = imgLoad("res/tom-thumb.png")
+		self.currentColor = Color(0,0,0,0xff)
+		self.setColor( Color(0xff,0xff,0xff) )
+		self.pos = [0, 0]
+
+	def setColor( self, color ):
+		pix = PixelArray(self.font)
+		pix.replace( self.currentColor, color )
+		self.currentColor = color
+		del pix
+
+	def putChr( self, asc, surf ):
+		y = ( math.floor(asc/32) ) * 6
+		x = ( asc % 32 ) * 4 
+		putImg( self.font, self.pos , (x,y,4,6), surf )
+		self.pos[0] += 4
+
+	def print( self, stringVar, pos, surf=-1 ):
+		global surface
+		if surf==-1:
+			surf = surface
+		self.pos[0] = pos[0]
+		self.pos[1] = pos[1]
+		for i in range( len(stringVar) ):
+			self.putChr( ord(stringVar[i:i+1]), surf )
 

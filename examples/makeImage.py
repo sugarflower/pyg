@@ -11,10 +11,9 @@ b = bytes([
 	0x00, 0xff, 0xff, 0x00,
 ])
 img = pyg.image.frombuffer(b,(3,1),"ARGB" )
+pyg.putImg(img,(1,1))
 
 while pyg._running:
 	pyg.process()
-	
-	pyg.putImg(img,(1,1))
 
-pyg.end()
+pyg.quit()
