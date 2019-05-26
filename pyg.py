@@ -18,6 +18,8 @@ def begin(real=[128,64],disp=-1):
 	_keyDownCnt = 0
 	_event = 0
 	_mouse = {"pos":[0,0]}
+	_mouseButton = [False] * 3
+	_click = [False] * 3
 
 	if disp == -1:
 		disp = real
@@ -28,7 +30,7 @@ def begin(real=[128,64],disp=-1):
 	mixer.init()
 	init()
 
-	mode = HWSURFACE | DOUBLEBUF 
+	mode = HWSURFACE #| DOUBLEBUF 
 	os.environ["SDL_VIDEO_CENTERED"] = "1"
 	screen = display.set_mode(_size["display"], mode)
 	surface = Surface(_size["real"], mode | SRCALPHA, 32)
@@ -36,9 +38,10 @@ def begin(real=[128,64],disp=-1):
 	set_mouseCursorVisible(False)
 
 def process( wait = 0.03 ):
-	global _keyDownCnt, _running, _keys, _mouse, _event, screen, surface, bg
+	global _keyDownCnt, _running, _keys, _mouse, _event, screen, surface, bg, _mouseButton, _click
 	st = time.time()
 	_procWait = True
+	_click = [False] * 3
 	while _procWait:
 		for e in event.get():
 			_event = e 
@@ -62,12 +65,25 @@ def process( wait = 0.03 ):
 			if e.type == MOUSEMOTION:
 				_mouse["pos"] = (e.pos[0],e.pos[1])
 
+			if e.type == MOUSEBUTTONDOWN:
+				_mouseButton = mouse.get_pressed()
+
+			if e.type == MOUSEBUTTONUP:
+				for i in range(3):
+					if _mouseButton[i]:
+						_click[i] = True
+				_mouseButton = [False] * 3
+
 		if time.time() - st > wait:
-			screen.blit(transform.scale(surface,_size["display"]),(0,0))
-			display.update()
+			update()
 			surface.fill((0,0,0,0))
 			screen.fill((0,0,0))
 			_procWait = False
+
+def update():
+	global screen, surface
+	screen.blit(transform.scale(surface,_size["display"]),(0,0))
+	display.update()
 
 def end():
 	quit()
@@ -95,6 +111,10 @@ def get_mousePos():
 	wa = _size["real"][0] / _size["display"][0]
 	ha = _size["real"][1] / _size["display"][1]
 	return _mouse["pos"][0] * wa , _mouse["pos"][1] * ha
+
+def isClick(button=0):
+	global _click
+	return _click[button]
 
 def createImg(size):
 	return Surface(size, mode | SRCALPHA, 32)

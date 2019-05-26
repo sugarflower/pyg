@@ -80,6 +80,15 @@ while pyg._running:
 	if pyg.isAnyKeyDown():
 		print("any")
 
+	if pyg.isClick():
+		print("click")
+	
+	if pyg.isClick(1):
+		print("click 1")
+	
+	if pyg.isClick(2):
+		print("click 2")
+
 """
 end app
 """
