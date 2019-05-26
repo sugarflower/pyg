@@ -9,7 +9,7 @@ FLIP_BOTH = 3
 def setTitle(title):
 	display.set_caption(title)
 
-def begin(real=[128,64],disp=-1):
+def begin(real=[128,128],disp=-1):
 	global _running, _keys, _keyDownCnt, _size, _event, _mouse, _mouseButton
 	global mixer, screen, surface, bg,  mode
 
@@ -37,12 +37,13 @@ def begin(real=[128,64],disp=-1):
 
 	set_mouseCursorVisible(False)
 
-def process( wait = 0.03 ):
+def process( wait = 0.016 ):
 	global _keyDownCnt, _running, _keys, _mouse, _event, screen, surface, bg, _mouseButton, _click
 	st = time.time()
 	_procWait = True
 	_click = [False] * 3
 	while _procWait:
+		time.sleep(0.01)
 		for e in event.get():
 			_event = e 
 			if e.type == QUIT:
@@ -76,8 +77,6 @@ def process( wait = 0.03 ):
 
 		if time.time() - st > wait:
 			update()
-			#surface.fill((0,0,0,0))
-			#screen.fill((0,0,0))
 			_procWait = False
 
 def update():
@@ -169,10 +168,14 @@ def fill( color=(0,0,0,0) , surf=-1 ):
 
 class TinyFont:
 	def __init__(self):
-		self.font = imgLoad("res/tom-thumb.png")
+		import res.font
+		import sys
+		self.font = image.frombuffer(res.font.data,(128,24),"RGBA")
 		self.currentColor = Color(0,0,0,0xff)
 		self.setColor( Color(0xff,0xff,0xff) )
 		self.pos = [0, 0]
+		sys.modules.pop("res.font")
+		del res.font.data
 
 	def setColor( self, color ):
 		pix = PixelArray(self.font)

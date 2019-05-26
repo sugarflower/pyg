@@ -4,8 +4,9 @@ import pyg
 pyg.begin((128,64),(384,192))
 pyg.setTitle("bitmapFont Test")
 
-f = pyg.TinyFont()
+pyg.fill((100,100,100))
 
+f = pyg.TinyFont()
 f.setColor( pyg.Color(0xff,0xff,0xff))
 f.print("HELLO PYG",(0,0))
 f.setColor( pyg.Color(0,255,0) )
