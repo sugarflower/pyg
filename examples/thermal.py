@@ -13,6 +13,7 @@ blk = True
 
 while pyg._running:
   pyg.process(0.2)
+  pyg.clear()
 
   vTemp = subprocess.check_output(thermal, shell=True)
   vTemp = int(vTemp) / 1000.0
@@ -27,4 +28,4 @@ while pyg._running:
 
   pyg.putImg( tempText, (48,89) )
 
-pyg.end()
+pyg.quit()
