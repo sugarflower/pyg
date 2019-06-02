@@ -10,8 +10,9 @@ FLIP_BOTH = 3
 def setTitle(title):
 	display.set_caption(title)
 
-def begin(real=[128,128],disp=-1):
+def begin(real=[128,128], disp=-1, margin=(30,30)):
 	global _running, _keys, _keyDownCnt, _size, _event, _mouse, _mouseButton
+	global _margin
 	global mixer, screen, surface, bg,  mode
 
 	_running = True
@@ -21,6 +22,7 @@ def begin(real=[128,128],disp=-1):
 	_mouse = {"pos":[0,0]}
 	_mouseButton = [False] * 3
 	_click = [False] * 3
+	_margin = margin
 
 	if disp == -1:
 		disp = real
@@ -33,13 +35,14 @@ def begin(real=[128,128],disp=-1):
 
 	mode = HWSURFACE #| DOUBLEBUF 
 	os.environ["SDL_VIDEO_CENTERED"] = "1"
-	screen = display.set_mode(_size["display"], mode)
+	screen = display.set_mode((_size["display"][0]+_margin[0]*2,_size["display"][1]+_margin[1]*2),mode)
 	surface = Surface(_size["real"], mode | SRCALPHA, 32)
 
 	set_mouseCursorVisible(False)
 
 def process( wait = 0.016 ):
-	global _keyDownCnt, _running, _keys, _mouse, _event, screen, surface, bg, _mouseButton, _click
+	global _keyDownCnt, _running, _keys, _mouse, _event, screen
+	global _margin, surface, bg, _mouseButton, _click
 	st = time.time()
 	_procWait = True
 	_click = [False] * 3
@@ -81,8 +84,8 @@ def process( wait = 0.016 ):
 			_procWait = False
 
 def update():
-	global screen, surface
-	screen.blit(transform.scale(surface,_size["display"]),(0,0))
+	global screen, surface,_size,_margin
+	screen.blit(transform.scale(surface,_size["display"]),_margin)
 	display.update()
 
 def imgLoad(path):
