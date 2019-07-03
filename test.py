@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 from pyg import *
 import pyg.font8x8 as font
 import random

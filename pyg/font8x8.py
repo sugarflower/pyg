@@ -183,6 +183,6 @@ def printStr(strvar):
 	p = getParent()
 	b = strvar.encode()
 	for s in b:
-		putChr(ord(s), _parent=p)
+		putChr(s, _parent=p)
 		pos=getPos()
 		setPos(pos[0]+_size["x"],pos[1])

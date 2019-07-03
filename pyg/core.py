@@ -82,6 +82,9 @@ def createImage(size):
 def getEvent():
 	return Event
 
+def getSurface():
+	return surface
+
 def putImage(img, pos, rect=None, flip=None, rotate=None, surf=None, scale=None, center=False):
 	if surf == None:
 		surf = surface
@@ -211,9 +214,9 @@ def run():
 	_setupDisplay()
 
 	if len(d & {"loop"} ) == 1:
-		while _running:
-			_process()	
+		while _running:	
 			p.loop()
+			_process()
 	
 	quit()
 
