@@ -1,7 +1,7 @@
 from pygame import *
 from pygame.locals import *
 import pygame.gfxdraw as gfx
-import time, inspect, os
+import time, os
 
 FLIP_H = 1
 FLIP_V = 2
@@ -14,17 +14,18 @@ _mouse = {"pos":[0,0], "button":[False]*3, "click":[False]*3 }
 _size = {"real":[128,128],"disp":[384,384],"margin":[20,20]}
 _screen = {"offset":[0,0]}
 _waitTime = 0.016
-_mode = SWSURFACE #HWSURFACE #| DOUBLEBUF
+_mode = SWSURFACE #HWSURFACE | DOUBLEBUF
 _fullscreen = False
 screen = None
 surface = None
 Event = None
 
-def setSize( real=None, disp=None, margin=None ):
-	if real != None:
-		_size["real"] = real
+def setSize( real, disp=None, margin=None ):
+	_size["real"] = real
 	if disp != None:
 		_size["disp"] = disp
+	else:
+		_size["disp"] = real
 	if margin != None:
 		_size["margin"] = margin
 
@@ -85,6 +86,9 @@ def getEvent():
 def getSurface():
 	return surface
 
+def getGfx():
+	return gfx
+
 def putImage(img, pos, rect=None, flip=None, rotate=None, surf=None, scale=None, center=False):
 	if surf == None:
 		surf = surface
@@ -115,10 +119,15 @@ def putImage(img, pos, rect=None, flip=None, rotate=None, surf=None, scale=None,
 		st2 = surfTemp
 		dw = 0
 		dh = 0 
+		w = surfTemp.get_width()
+		h = surfTemp.get_height()
 	
 	if scale != None:
 		sc = (int(st2.get_width()*scale[0]), int(st2.get_height()*scale[1]))
-		st3 = transform.scale(st2, sc)
+		if (scale[0]>1) | (scale[1]>1):
+			st3 = transform.scale(st2, sc)
+		else:
+			st3 = transform.smoothscale(st2, sc)
 	else:
 		st3 = st2
 
@@ -203,21 +212,19 @@ def _process():
 			_update()
 			_procWait = False
 
-def run():
-	s = inspect.stack()
-	p = inspect.getmodule( s[ len(s)-1 ][0] )
-	d = set(dir(p))
+def run(main):
+	d = set(dir(main))
 
 	if len(d & {"setup"} ) == 1:
-		p.setup()
-	
+		main.setup()
+
 	_setupDisplay()
 
 	if len(d & {"loop"} ) == 1:
-		while _running:	
-			p.loop()
+		while _running:
+			main.loop()
 			_process()
-	
+
 	quit()
 
 _init()
