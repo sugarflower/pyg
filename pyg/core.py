@@ -98,12 +98,12 @@ def putImage(img, pos, rect=None, flip=None, rotate=None, surf=None, scale=None,
 	else:
 		imgrect = (rect[2], rect[3])
 	surfTemp = Surface( imgrect, _mode | SRCALPHA, 32 )
-	surfTemp.blit(img,(0,0))
+	surfTemp.blit(img,(0,0),rect)
 
 	if flip != None:
 		if flip == FLIP_H:
 			surfTemp = transform.flip(surfTemp, True, False)
-		elif filp == FLIP_V:
+		elif flip == FLIP_V:
 			surfTemp = transform.flip(surfTemp, False,True)
 		elif flip == FLIP_BOTH:
 			surfTemp = transform.flip(surfTemp, True,True)

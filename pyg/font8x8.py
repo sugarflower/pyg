@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import inspect
 
 class Font:
 	font8x8_basic = (
@@ -172,7 +171,11 @@ class Font:
 		img = self.pyg.image.frombuffer(buf, (self.size["x"],self.size["y"]), "ARGB")
 		self.pyg.putImage(img, pos, surf=surf)
 
-	def printStr(self,strvar,surf=None):
+	def printStr(self,strvar,surf=None, pos=None, color=None):
+		if pos != None:
+			self.setPos(pos[0],pos[1])
+		if color != None:
+			self.setColor(color)
 		b = strvar.encode()
 		for s in b:
 			self.putChr(s,surf=surf)
