@@ -14,7 +14,7 @@ class main:
 		msg = "Welcome to pyg!"
 		msg2 ="pyg is an easy-to-use solution"
 		msg3 ="for PyGame."
-		self.msgImg = pyg.createImage((len(msg2)*8,25))
+		self.msgImg = pyg.createImage(len(msg2)*8, 25)
 		font.setPos(1,1)
 		font.setColor(pyg.Color(0,0,0))
 		font.printStr(msg,surf=self.msgImg)

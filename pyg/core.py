@@ -77,8 +77,8 @@ def fill( color=(0,0,0,0), surf=None ):
 def loadImage(path):
 	return image.load(path).convert_alpha()
 
-def createImage(size):
-	return Surface(size, _mode | SRCALPHA, 32)
+def createImage(w,h):
+	return Surface((w,h), _mode | SRCALPHA, 32)
 
 def getEvent():
 	return Event
