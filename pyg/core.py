@@ -46,7 +46,7 @@ def setOffset(offset):
 def isKeyDown(key):
 	return _keys[ord(key)]
 
-def isKeySownCode(key):
+def isKeyDownCode(key):
 	return _keys[key]
 
 def isAnyKeyDown():
